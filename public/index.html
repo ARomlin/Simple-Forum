@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test av AJAX</title>
+    <link href="/styles/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <h1>Thread-API</h1>
+<div id="myForm">
+    <h3 id="formTitle">My form to input data</h3>
+    <form id="formoid" action="inputData" title="Min form för data" method="post">
+        <div>
+            <label class="title">ID</label>
+            <input type="text" id="id2" name="id2" >
+        </div>
+        <div>
+            <label class="title">Title</label>
+            <input type="text" id="title2" name="title2" >
+        </div>
+        <div>
+            <label class="title">Name</label>
+            <input type="text" id="text2" name="text2" >
+        </div>
+        <div>
+            <input type="button" id="submitButton"  name="submitButton" value="Submit">
+        </div>
+    </form>
+</div>
+
+    <script src="/javascripts/jquery-2.2.0.min.js"></script>
+
+
+    <script>
+
+    $.ajax({
+            url: "/threads"
+        }).done(function(data) {
+            console.log('Fetched / threads: ', data);
+
+            for(var i=0; i< data.threads.length; i++){
+                console.log(data.threads[i].id + ': ' + data.threads[i].title + ': ' + data.threads[i].text);
+            }
+    });
+
+    $('#submitButton').on('click', function() {
+        var $id = $('#id2').val();
+        var $title = $('#title2').val();
+        var $text = $('#text2').val();
+
+        $.ajax({
+                    method: "POST",
+                    url: "/threads",
+                    data: { id: $id, title: $title, text: $text }
+                })
+                .done(function( ) {
+                console.log( "Data Saved: " + 'id: ' + $id + ' : ' + 'title: ' + $title + ' : ' + 'text: ' +$text);
+                });
+    });
+    </script>
+
+</body>
+</html>
