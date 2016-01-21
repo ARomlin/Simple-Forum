@@ -1,2 +1,2 @@
 # Simple-Forum
-Simple API uppgift (School assignment)
+Simple API uppgift (School assignment).
