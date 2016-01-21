@@ -7,9 +7,9 @@ $.ajax({
 }).done(function(data) {
     console.log('Fetched / threads: ', data);
 
-    for(var i=0; i< data.threads.length; i++){
-        console.log(data.threads[i].id + ': ' + data.threads[i].title + ': ' + data.threads[i].text);
-        $('#showThreads').append('<p>' + '<b>id: </b>' + '<p id="thread' + data.threads[i].id + '" class="linkThread">' + data.threads[i].id + '</p>' + ' <b>title:</b> ' + data.threads[i].title + '<br />' +' <b>text:</b> ' + data.threads[i].text + '</p><hr /><br />');
+    for(var i=0; i< data.length; i++){
+        console.log(data[i].id + ': ' + data[i].title + ': ' + data[i].text);
+        $('#showThreads').append('<p>' + '<b>id: </b>' + '<p id="thread' + data[i].id + '" class="linkThread">' + data[i].id + '</p>' + ' <b>title:</b> ' + data[i].title + '<br />' +' <b>text:</b> ' + data[i].text + '</p><hr /><br />');
     }
 });
 
