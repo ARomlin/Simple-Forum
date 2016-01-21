@@ -6,8 +6,10 @@ $.ajax({
     console.log('Fetched / threads: ', data);
 
     for(var i=0; i< data.length; i++){
+
         console.log(data[i]._id + ': ' + data[i].title + ': ' + data[i].text);
         $('#showThreads').append('<p>' + '<b>id: </b>' + '<p id="thread' + data[i]._id + '" class="linkThread">' + data[i]._id + '</p>' + ' <b>title:</b> ' + data[i].title + '<br />' +' <b>text:</b> ' + data[i].text + '</p><hr /><br />');
+
     }
 });
 
