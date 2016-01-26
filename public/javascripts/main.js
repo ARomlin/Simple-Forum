@@ -25,32 +25,13 @@ $('#btnCreateNewThread').on('click', function() {
             url: "/threads",
             data: { title: $title, text: $text }
         })
-        .done(function( ) {
-
-            console.log( "Data Saved: " + 'title: ' + $title + ' : ' + 'text: ' +$text);
-            $('#showThreads').append('<p>' + ' <b>title: </b><p class="linkThread">' + $title + '</p><br />' +' <b>text:</b> ' + $text + '</p><hr /><br />');
+        .done(function(data) { // "data" innehåller det svar som servern skickat tillbaka
+            console.log( "Data Saved: " + '_id: ' + data._id + ' title: ' + data.title + ' : ' + 'text: ' + data.text);
+            $('#showThreads').append('<b>title: </b><p class="linkThread" id="'+ data._id +'">' + data.title + '</p><br />' +' <b>text:</b> ' + data.text + '</p><hr /><br />');
         });
 
 });
 
-
-$( document ).ajaxSuccess(function( event, request, settings ) {
-
-    //Kod för att hämta ut id på vem som gjorde anropet
-    var eventTracker = event.target.activeElement;
-    console.log(eventTracker);
-    console.log(eventTracker.id);
-
-    //Kod för att få ut ett object med data på trådar.
-    // Kan hämta ut id:t till senaste postade tråden
-    console.log(request.responseText);
-var serverResponseObject = JSON.parse(request.responseText);
-    console.log(serverResponseObject);
-    console.log(serverResponseObject._id);
-
-   // $('.linkThread').last().attr('id', serverResponseObject._id); //appenda id:t? Nu hamnar inget id på taggen.. Ska fixas!
-
-});
 
 $('document').ready(function() {
 
