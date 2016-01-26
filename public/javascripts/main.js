@@ -33,6 +33,9 @@ $('#btnCreateNewThread').on('click', function() {
             $('#showThreads').append('<b>title: </b><p class="linkThread" id="'+ data._id +'">' + data.title + '</p><br />' +' <b>text:</b> ' + data.text + '</p><hr /><br />');
         });
 
+    $('#title2').val('');
+    $('#text2').val('');
+
 });
 
 
