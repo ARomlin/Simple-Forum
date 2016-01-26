@@ -13,12 +13,10 @@
 <h1>Thread-API</h1>
 <div id="showThreads">
     <div id="clickMe"> <!-- kod för att testa dialog i JQuery UI -->
-        <h3>Article title</h3>
-        <p>Some article text and some more text and some more text</p>
+        <p id="articleContent"></p>
         <br />
         <p class="linkThread">Place for some comments or link to comments</p>
     </div>
-    <p id="clicker">click Me</p> <!-- Kod för att testa dialog i JQuery UI -->
     <br />
 </div>
 
@@ -32,7 +30,7 @@
         </div>
         <div>
             <label class="title">Text</label>
-            <input type="text" id="text2" name="text2" >
+            <textarea type="text" id="text2" name="text2" placeholder="Add text here"></textarea>
         </div>
         <div>
             <input type="button" id="btnCreateNewThread" name="submitButton" value="Submit">

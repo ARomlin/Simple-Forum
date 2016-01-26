@@ -1,4 +1,7 @@
 
+var clickMe = document.getElementById('clickMe');
+var articleContent = document.getElementById('articleContent');
+
 
 $.ajax({
     url: "/threads"
@@ -37,12 +40,42 @@ $('document').ready(function() {
 
     $('#clickMe').dialog({
         autoOpen: false,
-        title: 'Basic Dialog'
+        maxWidth:600,
+        maxHeight: 500,
+        width: 600,
+        height: 500,
+        overflow: scroll
     });
 
-    $('#clicker').on('click', function () {
-        $('#clickMe').dialog('open');
-        return false;
-    });
 });
 
+$(document).on('click', '.linkThread', function() {
+    var tempID = $(this).attr('id');
+    //console.log(tempID);
+
+    $.ajax({
+        url: "/threads"
+    }).done(function(data) {
+
+        for(var i=0; i< data.length; i++){
+            if( data[i]._id === tempID ) {
+                //console.log( 'Titel: ' + data[i].title + ' Text: ' + data[i].text );
+
+                var titleDialog = data[i].title;
+                var textDialog = data[i].text;
+
+                //console.log(typeof(titleDialog));
+                //console.log(typeof(textDialog));
+
+                $('#clickMe').dialog('option', 'title', titleDialog);
+
+                $('#articleContent').html(textDialog);
+
+                $('#clickMe').dialog('open');
+
+                    return false;
+
+            }
+        }
+    });
+});

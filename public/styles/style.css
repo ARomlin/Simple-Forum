@@ -10,7 +10,7 @@ body  {
     margin: 0 auto;
     margin-top: 10px;
     width: 400px;
-    height: 140px;
+    height: 170px;
     background-color: #43b7ff;
 }
 
@@ -23,8 +23,10 @@ body  {
 }
 
 #text2 {
-    width: 20vw;
-    height: 1.5rem;
+    width: 22vw;
+    height: 4.5rem;
+    overflow: scroll;
+    margin-top: 10px;
 }
 
 .linkThread {
@@ -71,6 +73,16 @@ input[type=text]:focus {
 }
 
 .ui-dialog {
-    height: 100px;
-    width: 200px;
+    height: 200px;
+    width: 400px;
+}
+
+.ui-dialog-titlebar {
+    background-color: #4168ff;
+    background-image: none;
+    color: #000;
+}
+
+.ui-button:focus {
+    outline:none !important
 }
