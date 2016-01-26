@@ -39,12 +39,31 @@ $('#btnCreateNewThread').on('click', function() {
 $('document').ready(function() {
 
     $('#clickMe').dialog({
+
+        buttons: [
+            {
+                text: "Ok",
+                icons: {
+                    primary: "ui-icon-heart"
+                },
+                click: function() {
+                    $( this ).dialog( "close" );
+                }
+
+                // Uncommenting the following line would hide the text,
+                // resulting in the label being used as a tooltip
+                //showText: false
+            }
+        ],
+        modal: true,
+
         autoOpen: false,
         maxWidth:600,
         maxHeight: 500,
         width: 600,
         height: 500,
         overflow: scroll
+
     });
 
 });
