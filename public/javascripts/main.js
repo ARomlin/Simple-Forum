@@ -18,23 +18,29 @@ $.ajax({
 
 
 $('#btnCreateNewThread').on('click', function() {
+    if(($('#title2').val() && $('#text2').val()) !== '') {
 
-    var $title = $('#title2').val();
+        var $title = $('#title2').val();
 
-    var $text = $('#text2').val();
+        var $text = $('#text2').val();
 
-    $.ajax({
-            method: "POST",
-            url: "/threads",
-            data: { title: $title, text: $text }
-        })
-        .done(function(data) { // "data" innehåller det svar som servern skickat tillbaka
-            console.log( "Data Saved: " + '_id: ' + data._id + ' title: ' + data.title + ' : ' + 'text: ' + data.text);
-            $('#showThreads').append('<b>title: </b><p class="linkThread" id="'+ data._id +'">' + data.title + '</p><br />' +' <b>text:</b> ' + data.text + '</p><hr /><br />');
-        });
 
-    $('#title2').val('');
-    $('#text2').val('');
+        $.ajax({
+                method: "POST",
+                url: "/threads",
+                data: {title: $title, text: $text}
+            })
+            .done(function (data) { // "data" innehåller det svar som servern skickat tillbaka
+                console.log("Data Saved: " + '_id: ' + data._id + ' title: ' + data.title + ' : ' + 'text: ' + data.text);
+                $('#showThreads').append('<b>title: </b><p class="linkThread" id="' + data._id + '">' + data.title + '</p><br />' + ' <b>text:</b> ' + data.text + '</p><hr /><br />');
+            });
+
+        $('#title2').val('');
+        $('#text2').val('');
+    } else {
+        alert('The input fields must contain text before submitting');
+        false;
+    }
 
 });
 
@@ -86,12 +92,13 @@ $(document).on('click', '.linkThread', function() {
                 var titleDialog = data[i].title;
                 var textDialog = data[i].text;
 
-                //console.log(typeof(titleDialog));
-                //console.log(typeof(textDialog));
+                //textDialog = textDialog.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                //titleDialog = titleDialog.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
 
                 $('#clickMe').dialog('option', 'title', titleDialog);
 
-                $('#articleContent').html(textDialog);
+                $('#clickMe').text(textDialog);
 
                 $('#clickMe').dialog('open');
 
