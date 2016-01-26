@@ -8,7 +8,7 @@ $.ajax({
     for(var i=0; i< data.length; i++){
 
         console.log(data[i]._id + ': ' + data[i].title + ': ' + data[i].text);
-        $('#showThreads').append('<p>' + ' <b>title:</b> <p class="linkThread" id="'+ data[i]._id +'">' + data[i].title + '<br /><p>' +' <b>text:</b> ' + data[i].text + '</p><hr /><br />');
+        $('#showThreads').append('<p>' + ' <b>title:</b> <p class="linkThread" id="'+ data[i]._id +'">' + data[i].title + '</p><br /><p>' +' <b>text:</b> ' + data[i].text + '</p><hr /><br />');
 
     }
 });
@@ -48,6 +48,20 @@ var serverResponseObject = JSON.parse(request.responseText);
     console.log(serverResponseObject);
     console.log(serverResponseObject._id);
 
+   // $('.linkThread').last().attr('id', serverResponseObject._id); //appenda id:t? Nu hamnar inget id på taggen.. Ska fixas!
+
 });
 
+$('document').ready(function() {
+
+    $('#clickMe').dialog({
+        autoOpen: false,
+        title: 'Basic Dialog'
+    });
+
+    $('#clicker').on('click', function () {
+        $('#clickMe').dialog('open');
+        return false;
+    });
+});
 

@@ -10,7 +10,7 @@ body  {
     margin: 0 auto;
     margin-top: 10px;
     width: 400px;
-    height: 200px;
+    height: 140px;
     background-color: #43b7ff;
 }
 
@@ -68,4 +68,9 @@ input[type=text]:focus {
     margin: 0 auto;
     border: 1px solid black;
     width: 60vw;
+}
+
+.ui-dialog {
+    height: 100px;
+    width: 200px;
 }
