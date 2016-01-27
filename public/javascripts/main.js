@@ -4,6 +4,7 @@ var articleContent = document.getElementById('articleContent');
 
 
 $.ajax({
+    method: "GET",
     url: "/threads"
 }).done(function(data) {
 
