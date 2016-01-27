@@ -10,19 +10,28 @@ $.ajax({
 
     for(var i=0; i< data.length; i++){
 
+        var textContent = data[i].text;
+        textContent = textContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+        var titleContent = data[i].title;
+        titleContent = titleContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+
         console.log(data[i]._id + ': ' + data[i].title + ': ' + data[i].text);
-        $('#showThreads').append('<p>' + ' <b>title:</b> <p class="linkThread" id="'+ data[i]._id +'">' + data[i].title + '</p><br /><p>' +' <b>text:</b> ' + data[i].text + '</p><hr /><br />');
+        $('#showThreads').append('<p>' + ' <b>title:</b> <p class="linkThread" id="'+ data[i]._id +'">' + titleContent + '</p><br /><p>' +' <b>text:</b> ' + textContent + '</p><hr /><br />');
 
     }
 });
 
 
 $('#btnCreateNewThread').on('click', function() {
-    if(($('#title2').val() && $('#text2').val()) !== '') {
+    if(($('#title2').val().replace(/ /g,'') && $('#text2').val().replace(/ /g,''))) {
 
         var $title = $('#title2').val();
+        $title = $title.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
         var $text = $('#text2').val();
+        $text = $text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 
         $.ajax({
@@ -51,9 +60,35 @@ $('document').ready(function() {
 
         buttons: [
             {
-                text: "Ok",
+                text: "LIKE",
                 icons: {
                     primary: "ui-icon-heart"
+                },
+                click: function() {
+                    $( this ).effect( "bounce" );
+                }
+
+                // Uncommenting the following line would hide the text,
+                // resulting in the label being used as a tooltip
+                //showText: false
+            },
+            {
+                text: "Comment",
+                icons: {
+                    primary: "ui-icon-pencil"
+                },
+                click: function() {
+                    $( this ).dialog( "close" );
+                }
+
+                // Uncommenting the following line would hide the text,
+                // resulting in the label being used as a tooltip
+                //showText: false
+            },
+            {
+                text: "Ok",
+                icons: {
+                    primary: "ui-icon-check"
                 },
                 click: function() {
                     $( this ).dialog( "close" );
@@ -64,7 +99,10 @@ $('document').ready(function() {
                 //showText: false
             }
         ],
+        show: "fade",
+        hide: "fade",
         modal: true,
+        dialogClass: "no-close",
 
         autoOpen: false,
         maxWidth:600,

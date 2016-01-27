@@ -5,13 +5,14 @@
 
 body  {
     text-align: center;
+    background-color: rgba(65, 104, 255, 0.58);
 }
 #myForm {
     margin: 0 auto;
     margin-top: 10px;
     width: 400px;
     height: 170px;
-    background-color: #43b7ff;
+    background-color: #4168ff;
 }
 
 #id2 {
@@ -70,6 +71,7 @@ input[type=text]:focus {
     margin: 0 auto;
     border: 1px solid black;
     width: 60vw;
+    background-color: white;
 }
 
 .ui-dialog {
@@ -91,4 +93,8 @@ input[type=text]:focus {
     background: rgb(0, 0, 0);
     opacity: .80 !important;
     filter: Alpha(Opacity=80);
+}
+
+.no-close .ui-dialog-titlebar-close {
+    display: none;
 }
