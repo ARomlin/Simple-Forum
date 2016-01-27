@@ -42,8 +42,8 @@ $('#btnCreateNewThread').on('click', function() {
             .done(function (data) { // "data" innehåller det svar som servern skickat tillbaka
                 console.log("Data Saved: " + '_id: ' + data._id + ' title: ' + data.title + ' : ' + 'text: ' + data.text);
                 $('#showThreads').append('<b>title: </b><p class="linkThread" id="' + data._id + '">' + data.title + '</p><br />' + ' <b>text:</b> ' + data.text + '</p><hr /><br />');
-        }).fail( function(){
-            alert("Fel. Kunde inte skapa tråd!");    
+        }).fail( function(jqXHR, statusText){
+            alert('Kunde inte skapa tråd!\nServerkommunikationsfel: '+ jqXHR.statusText);    
         });
 
         $('#title2').val('');
