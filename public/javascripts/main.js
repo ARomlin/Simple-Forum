@@ -120,7 +120,7 @@ $('document').ready(function() {
                     console.log(idHolder);
 
                     var confirm = prompt('Are you sure? Yes/No: ');
-                    confirm.toLowerCase();
+                    confirm = confirm.toLowerCase();
 
                     if (confirm === "yes") {
                         $.ajax({
