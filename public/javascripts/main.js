@@ -42,7 +42,9 @@ $('#btnCreateNewThread').on('click', function() {
             .done(function (data) { // "data" innehåller det svar som servern skickat tillbaka
                 console.log("Data Saved: " + '_id: ' + data._id + ' title: ' + data.title + ' : ' + 'text: ' + data.text);
                 $('#showThreads').append('<b>title: </b><p class="linkThread" id="' + data._id + '">' + data.title + '</p><br />' + ' <b>text:</b> ' + data.text + '</p><hr /><br />');
-            });
+        }).fail( function(){
+            alert("Fel. Kunde inte skapa tråd!");    
+        });
 
         $('#title2').val('');
         $('#text2').val('');
