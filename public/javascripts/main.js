@@ -67,6 +67,42 @@ $('#btnCreateNewThread').on('click', function() {
 
 $('document').ready(function() {
 
+    $('#comments').dialog({
+
+        buttons: [
+            {
+                text: "Ok",
+                icons: {
+                    primary: "ui-icon-check"
+                },
+                click: function() {
+                    $( this ).dialog( "close" );
+                    //Ny get request på hela sidan för att uppdatera
+                }
+
+                // Uncommenting the following line would hide the text,
+                // resulting in the label being used as a tooltip
+                //showText: false
+            }
+        ],
+
+        show: "fade",
+        hide: "fade",
+        modal: true,
+        dialogClass: "no-close",
+
+        autoOpen: false,
+        maxWidth:600,
+        maxHeight: 500,
+        width: 600,
+        height: 500,
+        overflow: scroll,
+
+
+
+
+    });
+
     $('#clickMe').dialog({
 
         buttons: [
@@ -84,12 +120,14 @@ $('document').ready(function() {
                 //showText: false
             },
             {
-                text: "Comment",
+                text: "EDIT",
                 icons: {
                     primary: "ui-icon-pencil"
                 },
                 click: function() {
                     $( this ).dialog( "close" );
+                    $('#comments').dialog('open');
+                    showThread($(this).find(".holdMyId").html());
                 }
 
                 // Uncommenting the following line would hide the text,
@@ -97,9 +135,9 @@ $('document').ready(function() {
                 //showText: false
             },
             {
-                text: "Ok",
+                text: "Comment",
                 icons: {
-                    primary: "ui-icon-check"
+                    primary: "ui-icon-comment"
                 },
                 click: function() {
                     $( this ).dialog( "close" );
@@ -147,6 +185,19 @@ $('document').ready(function() {
                 // Uncommenting the following line would hide the text,
                 // resulting in the label being used as a tooltip
                 //showText: false
+            },
+            {
+                text: "Ok",
+                icons: {
+                    primary: "ui-icon-check"
+                },
+                click: function() {
+                    $( this ).dialog( "close" );
+                }
+
+                // Uncommenting the following line would hide the text,
+                // resulting in the label being used as a tooltip
+                //showText: false
             }
         ],
         show: "fade",
@@ -166,9 +217,12 @@ $('document').ready(function() {
 });
 
 $(document).on('click', '.linkThread', function(data) {
+
     console.log(data.target.id);
     var tempID = $(this).attr('id');
     //console.log(tempID);
+
+
 
     $.ajax({
         url: "/threads"
@@ -202,7 +256,7 @@ $(document).on('click', '.linkThread', function(data) {
 });
 
 
-function getThreads(){
+function getThreads() {
     $.ajax({
         url: "/threads"
     }).done(function (data) {
@@ -214,12 +268,12 @@ function getThreads(){
         for (var i = 0; i < data.length; i++) {
 
             var textContent = data[i].text;
-            if(data[i].text != undefined) {
+            if (data[i].text != undefined) {
                 textContent = textContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
             }
 
             var titleContent = data[i].title;
-            if(data[i].title != undefined) {
+            if (data[i].title != undefined) {
                 titleContent = titleContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
             }
 
@@ -228,4 +282,36 @@ function getThreads(){
 
         }
     });
+}
+
+
+function showThread(myThreadId) {
+
+    alert('I´m in!');
+    console.log(myThreadId);
+
+    $.ajax({
+        method: "GET",
+        url: "/threads/" + myThreadId
+    }).done(function (data) {
+
+
+        console.log(data._id);
+        console.log(data.title);
+        console.log(data.text);
+
+        //var TitlePut =
+
+
+        $('#comments').dialog('option', 'title', "Edit the Thread");
+
+        $('#comments').html('<p>title</p><input type="text" id="editThreadTitle" value="' + data.title + '">');
+        $('#comments').append('<br /><p>text</p><textarea type="text" id="editThreadText">' + data.text + '</textarea>');
+
+        //$('#showThread').text(textDialog);
+
+
+
+    });
+
 }
