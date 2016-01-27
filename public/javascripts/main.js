@@ -214,12 +214,14 @@ function getThreads(){
         for (var i = 0; i < data.length; i++) {
 
             var textContent = data[i].text;
+            if(data[i].text != undefined) {
+                textContent = textContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            }
 
-            textContent = textContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
             var titleContent = data[i].title;
-
-            titleContent = titleContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
+            if(data[i].title != undefined) {
+                titleContent = titleContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            }
 
             console.log(data[i]._id + ': ' + data[i].title + ': ' + data[i].text);
             $('#showThreads').append('<p>' + ' <b>title:</b> <p class="linkThread" id="' + data[i]._id + '">' + titleContent + '</p><br /><p>' + ' <b>text:</b> ' + textContent + '</p><hr /><br />');
