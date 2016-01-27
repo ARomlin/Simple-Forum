@@ -98,3 +98,7 @@ input[type=text]:focus {
 .no-close .ui-dialog-titlebar-close {
     display: none;
 }
+
+.holdMyId {
+    display: none;
+}
