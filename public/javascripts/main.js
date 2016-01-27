@@ -67,22 +67,55 @@ $('#btnCreateNewThread').on('click', function() {
 
 $('document').ready(function() {
 
-    $('#comments').dialog({
+    $('#editMyThread').dialog({
 
         buttons: [
+            {
+                text: "Cancel",
+                icons: {
+                    primary: "ui-icon-close"
+                },
+                click: function() {
+                    $( this ).dialog( "close" );
+                }
+            },
             {
                 text: "Ok",
                 icons: {
                     primary: "ui-icon-check"
                 },
                 click: function() {
-                    $( this ).dialog( "close" );
-                    //Ny get request på hela sidan för att uppdatera
+
+                    var tempID = $('#editMyThread').find('.holdMyId').html();
+
+                    var $title = $('#editMyThread').find('#editThreadTitle').val();
+                    $title = $title.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    console.log($title);
+
+                    var $text = $('#editMyThread').find('#editThreadText').val();
+                    $text = $text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    console.log($text);
+
+                    if(($('#editMyThread').find('#editThreadTitle').val().replace(/ /g,'') && $('#editMyThread').find('#editThreadText').val().replace(/ /g,''))) {
+
+
+                        $.ajax({
+                            method: "PUT",
+                            url: "/threads/" + tempID,
+                            data: {title: $title, text: $text}
+                        }).done(function (data) {
+                            console.log('Success. You updated article with id: ' + tempID);
+                        });
+
+                        //Ny get request på hela sidan för att uppdatera
+                        getThreads();
+                        $(this).dialog("close");
+                    } else {
+                        alert('Fields can´ be left empty');
+                        return false;
+                    }
                 }
 
-                // Uncommenting the following line would hide the text,
-                // resulting in the label being used as a tooltip
-                //showText: false
             }
         ],
 
@@ -96,7 +129,7 @@ $('document').ready(function() {
         maxHeight: 500,
         width: 600,
         height: 500,
-        overflow: scroll,
+        overflow: scroll
 
 
 
@@ -126,7 +159,7 @@ $('document').ready(function() {
                 },
                 click: function() {
                     $( this ).dialog( "close" );
-                    $('#comments').dialog('open');
+                    $('#editMyThread').dialog('open');
                     showThread($(this).find(".holdMyId").html());
                 }
 
@@ -287,7 +320,6 @@ function getThreads() {
 
 function showThread(myThreadId) {
 
-    alert('I´m in!');
     console.log(myThreadId);
 
     $.ajax({
@@ -303,10 +335,11 @@ function showThread(myThreadId) {
         //var TitlePut =
 
 
-        $('#comments').dialog('option', 'title', "Edit the Thread");
+        $('#editMyThread').dialog('option', 'title', "Edit the Thread");
 
-        $('#comments').html('<p>title</p><input type="text" id="editThreadTitle" value="' + data.title + '">');
-        $('#comments').append('<br /><p>text</p><textarea type="text" id="editThreadText">' + data.text + '</textarea>');
+        $('#editMyThread').html('<p>title</p><input type="text" id="editThreadTitle" value="' + data.title + '">');
+        $('#editMyThread').append('<br /><p>text</p><textarea type="text" id="editThreadText">' + data.text + '</textarea>');
+        $('#editMyThread').append('<p class="holdMyId">' + myThreadId + '</p>');
 
         //$('#showThread').text(textDialog);
 
