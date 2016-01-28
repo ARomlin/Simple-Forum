@@ -437,7 +437,7 @@ function showThread(myThreadId) {
         $('#editMyThread').dialog('option', 'title', "Edit the Thread");
 
         $('#editMyThread').html('<p>title</p><input type="text" id="editThreadTitle" value="' + data.title + '">');
-        $('#editMyThread').append('<br /><p>text</p><textarea type="text" id="editThreadText">' + data.text + '</textarea>');
+        $('#editMyThread').append('<br /><p>text</p><textarea id="editThreadText">' + data.text + '</textarea>');
         $('#editMyThread').append('<p class="holdMyId">' + myThreadId + '</p>');
 
         //$('#showThread').text(textDialog);
