@@ -95,15 +95,12 @@ $('document').ready(function() {
         width: 600,
         height: 500,
         overflow: scroll,
-        open : function() {
-            $('#commentModal').dialog( "option" , "title" ,"Comments");
-        },
 
         buttons: [
             {
-                text: "Cancel",
+                text: "Done",
                 icons: {
-                    primary: "ui-icon-close"
+                    primary: "ui-icon-check"
                 },
                 click: function() {
                     $( this ).dialog( "close" );
@@ -258,6 +255,7 @@ $('document').ready(function() {
                 click: function() {
                     $( this ).dialog( "close" );
                     $('#commentModal').dialog('open');
+                    showComments($(this).find(".holdMyId").html());
                 }
 
                 // Uncommenting the following line would hide the text,
@@ -447,3 +445,27 @@ function showThread(myThreadId) {
     });
 
 }
+
+
+function showComments(threadId) {
+    //console.log(threadId);
+
+    $.ajax({
+        method: "GET",
+        url: "/threads/" + threadId
+    }).done(function (data) {
+
+        $('#commentModal').dialog( "option" , "title" ,"Comments");
+
+
+        for(var i=0; i<data.comments.length; i++) {
+
+            console.log(data.comments[i].text);
+            $('#commentList').append('<p>' + data.comments[i].text + '</p><hr />');
+
+        }
+
+
+    });
+
+};
