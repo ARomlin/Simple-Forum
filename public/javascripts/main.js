@@ -461,7 +461,8 @@ function showComments(threadId) {
         for(var i=0; i<data.comments.length; i++) {
 
             console.log(data.comments[i].text);
-            $('#commentList').append('<p>' + data.comments[i].text + '</p><hr />');
+            var commentText = (data.comments[i].text).replace(/</g, "&lt;").replace(/>/g, "&gt;")
+            $('#commentList').append('<p>' + commentText + '</p><hr />');
 
         }
 
