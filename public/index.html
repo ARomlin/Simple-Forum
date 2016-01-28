@@ -13,7 +13,19 @@
 <h1>Thread-API</h1>
 <div id="showThreads">
     <div id="clickMe"> <!-- kod för att testa dialog i JQuery UI --></div>
-    <div id="editMyThread"><!--Comments will be visable here!--></div>
+    <div id="editMyThread"><!--Comments will be visable here! --></div>
+    <div id="commentModal"> <!-- Comments will be visable here! -->
+        <div id="commentList"></div>
+        <hr />
+        <form id="commentPost" action="inputData" title="Form for comments" method="post">
+            <div>
+                <label class="comment"> Your Comment:</label>
+                <br />
+                <textarea type="text" id="commentInput" name="commentInput" placeholder="Your comment goes here!"></textarea>
+            </div>
+        </form>
+
+    </div>
     <br />
 </div>
 

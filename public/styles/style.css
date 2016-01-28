@@ -107,3 +107,8 @@ input[type=text]:focus {
     width: 50%;
     height: 5rem;
 }
+
+#commentInput {
+    width: 70%;
+    height: 5rem;
+}

@@ -1,7 +1,8 @@
 
-var clickMe = document.getElementById('clickMe');
-var articleContent = document.getElementById('articleContent');
+var commentList = document.getElementById('commentList'); //For showing comments in HTML before database is setup.
 
+
+// Get all threads and display them on index page
 
 $.ajax({
     method: "GET",
@@ -32,6 +33,11 @@ $.ajax({
     }
 });
 
+//=====End of Get all threads and display them on index page ====
+
+
+
+// Create a new thread on click event
 
 $('#btnCreateNewThread').on('click', function() {
     if(($('#title2').val().replace(/ /g,'') && $('#text2').val().replace(/ /g,''))) {
@@ -64,8 +70,76 @@ $('#btnCreateNewThread').on('click', function() {
 
 });
 
+// ==== End of Create a new thread on click event ====
+
+
+
+
+// Document ready function
 
 $('document').ready(function() {
+
+
+
+    // To handle comments on a thread inside a modal
+
+    $('#commentModal').dialog({
+        show: "fade",
+        hide: "fade",
+        modal: true,
+        dialogClass: "no-close",
+
+        autoOpen: false,
+        maxWidth:600,
+        maxHeight: 500,
+        width: 600,
+        height: 500,
+        overflow: scroll,
+        open : function() {
+            $('#commentModal').dialog( "option" , "title" ,"Comments");
+        },
+
+        buttons: [
+            {
+                text: "Cancel",
+                icons: {
+                    primary: "ui-icon-close"
+                },
+                click: function() {
+                    $( this ).dialog( "close" );
+                }
+            },{
+                text: "Post Comment",
+                icons: {
+                    primary: "ui-icon-pencil"
+                },
+                click: function(data) {
+                   var $comment = $("#commentInput").val();
+                    $comment = $comment.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+
+                    if($comment.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/ /g,'') !== '') {
+                        commentList.innerHTML += "<p>" + $comment + '</p><br />';
+                        $("#commentInput").val('');
+                    } else {
+                        alert('Comment-field is empty!');
+                        $("#commentInput").val('');
+                        return false;
+                    }
+                }
+            }
+        ]
+
+    });
+
+//======End of To handle comments on a thread inside a modal=======
+
+
+
+
+
+
+    // Set up, show and edit (PUT) a thread inside a modal
 
     $('#editMyThread').dialog({
 
@@ -136,6 +210,15 @@ $('document').ready(function() {
 
     });
 
+    //======End of Set up, show and edit (PUT) a thread inside a modal========
+
+
+
+
+
+
+    // Set up dialog properties for Modal to show a single thread
+
     $('#clickMe').dialog({
 
         buttons: [
@@ -168,19 +251,20 @@ $('document').ready(function() {
                 //showText: false
             },
             {
-                text: "Comment",
+                text: "COMMENTS",
                 icons: {
                     primary: "ui-icon-comment"
                 },
                 click: function() {
                     $( this ).dialog( "close" );
+                    $('#commentModal').dialog('open');
                 }
 
                 // Uncommenting the following line would hide the text,
                 // resulting in the label being used as a tooltip
                 //showText: false
             },{
-                text: "Delete",
+                text: "DELETE",
                 icons: {
                     primary: "ui-icon-trash",
                 },
@@ -220,7 +304,7 @@ $('document').ready(function() {
                 //showText: false
             },
             {
-                text: "Ok",
+                text: "OK",
                 icons: {
                     primary: "ui-icon-check"
                 },
@@ -247,7 +331,16 @@ $('document').ready(function() {
 
     });
 
-});
+    //====== End of Set up dialog properties for Modal to show a single thread=======
+
+}); // ===End of Document ready function ===
+
+
+
+
+
+
+// Handle click event on single thread
 
 $(document).on('click', '.linkThread', function(data) {
 
@@ -287,6 +380,12 @@ $(document).on('click', '.linkThread', function(data) {
         }
     });
 });
+
+
+// ==== End of Handle click event on single thread ====
+
+
+
 
 
 function getThreads() {
