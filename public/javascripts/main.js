@@ -455,6 +455,8 @@ function showComments(threadId) {
         url: "/threads/" + threadId
     }).done(function (data) {
 
+        $('#commentList').html('');
+
         $('#commentModal').dialog( "option" , "title" ,"Comments");
 
 
