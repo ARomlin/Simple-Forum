@@ -88,7 +88,6 @@ $('document').ready(function() {
         hide: "fade",
         modal: true,
         dialogClass: "no-close",
-
         autoOpen: false,
         maxWidth:600,
         maxHeight: 500,
@@ -111,13 +110,33 @@ $('document').ready(function() {
                     primary: "ui-icon-pencil"
                 },
                 click: function(data) {
-                   var $comment = $("#commentInput").val();
+                   var $comment = $("#commentInput").val(),
+                      myThreadId = $("#commentModal").data('myThreadId'); // Here we get the threadId from the caller
+
                     $comment = $comment.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 
                     if($comment.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/ /g,'') !== '') {
                         commentList.innerHTML += "<p>" + $comment + '</p><br />';
                         $("#commentInput").val('');
+                                            if ((myThreadId !== undefined) && (myThreadId.trim() !== "")) { // some sanity check
+
+                                                // Send the comment to the server
+                                                $.ajax({
+                                                        method: "PUT",
+                                                        url: "/threads/" + myThreadId + "/comment",
+                                                        data: {
+                                                            text: $comment
+                                                        }
+                                                    })
+                                                    .done(function (data) { // "data" innehåller det svar som servern skickat tillbaka
+                                                        console.log("Comment saved on thread: _id: " + data._id);
+                                                    }).fail(function (jqXHR, statusText) {
+                                                        alert('Could not create comment!\nServer Communication error: ' + jqXHR.statusText);
+                                                    });
+                                            } else {
+                                                alert("Internal Error: Missing the threadId, the \"dialog\" caller did not provide the threadId when opening this comment modal!");
+                                            }
                     } else {
                         alert('Comment-field is empty!');
                         $("#commentInput").val('');
@@ -254,7 +273,7 @@ $('document').ready(function() {
                 },
                 click: function() {
                     $( this ).dialog( "close" );
-                    $('#commentModal').dialog('open');
+                    $('#commentModal').data('myThreadId', $(this).find(".holdMyId").html()).dialog('open'); // Also send the current threadId to the dialog
                     showComments($(this).find(".holdMyId").html());
                 }
 
