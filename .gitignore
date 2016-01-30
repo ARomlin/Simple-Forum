@@ -8,5 +8,6 @@ typings/
 [Oo]bj/
 [Bb]in/
 *.njsproj
+*.sln
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
