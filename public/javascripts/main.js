@@ -89,54 +89,54 @@ $('document').ready(function() {
         modal: true,
         dialogClass: "no-close",
         autoOpen: false,
-        maxWidth:600,
+        maxWidth: 600,
         maxHeight: 500,
         width: 600,
         height: 500,
         overflow: scroll,
-
+        
         buttons: [
             {
                 text: "Done",
                 icons: {
                     primary: "ui-icon-check"
                 },
-                click: function() {
-                    $( this ).dialog( "close" );
+                click: function () {
+                    $(this).dialog("close");
                 }
-            },{
+            }, {
                 text: "Post Comment",
                 icons: {
                     primary: "ui-icon-pencil"
                 },
-                click: function(data) {
-                   var $comment = $("#commentInput").val(),
-                      myThreadId = $("#commentModal").data('myThreadId'); // Here we get the threadId from the caller
-
+                click: function (data) {
+                    var $comment = $("#commentInput").val(),
+                        myThreadId = $("#commentModal").data('myThreadId'); // Here we get the threadId from the caller
+                    
                     $comment = $comment.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-
-                    if($comment.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/ /g,'') !== '') {
-                        commentList.innerHTML += "<p>" + $comment + '</p><br />';
+                    
+                    if ($comment.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/ /g, '') !== '') {
+                        
                         $("#commentInput").val('');
-                                            if ((myThreadId !== undefined) && (myThreadId.trim() !== "")) { // some sanity check
-
-                                                // Send the comment to the server
-                                                $.ajax({
-                                                        method: "PUT",
-                                                        url: "/threads/" + myThreadId + "/comment",
-                                                        data: {
-                                                            text: $comment
-                                                        }
-                                                    })
-                                                    .done(function (data) { // "data" innehåller det svar som servern skickat tillbaka
-                                                        console.log("Comment saved on thread: _id: " + data._id);
-                                                    }).fail(function (jqXHR, statusText) {
-                                                        alert('Could not create comment!\nServer Communication error: ' + jqXHR.statusText);
-                                                    });
-                                            } else {
-                                                alert("Internal Error: Missing the threadId, the \"dialog\" caller did not provide the threadId when opening this comment modal!");
-                                            }
+                        if ((myThreadId !== undefined) && (myThreadId.trim() !== "")) { // some sanity check
+                            
+                            // Send the comment to the server
+                            $.ajax({
+                                method: "PUT",
+                                url: "/threads/" + myThreadId + "/comment",
+                                data: {
+                                    text: $comment
+                                }
+                            }).done(function (data) { // "data" contains the answer from the server
+                                // Refresh the comments list
+                                showComments(data._id);                                
+                                console.log("Comment saved on thread: _id: " + data._id);
+                            }).fail(function (jqXHR, statusText) {
+                                alert('Could not create comment!\nServer Communication error: ' + jqXHR.statusText);
+                            });
+                        } else {
+                            alert("Internal Error: Missing the threadId, the \"dialog\" caller did not provide the threadId when opening this comment modal!");
+                        }
                     } else {
                         alert('Comment-field is empty!');
                         $("#commentInput").val('');
@@ -187,8 +187,6 @@ $('document').ready(function() {
                     console.log($text);
 
                     if(($('#editMyThread').find('#editThreadTitle').val().replace(/ /g,'') && $('#editMyThread').find('#editThreadText').val().replace(/ /g,''))) {
-
-
                         $.ajax({
                             method: "PUT",
                             url: "/threads/" + tempID,
@@ -478,16 +476,33 @@ function showComments(threadId) {
 
         $('#commentModal').dialog( "option" , "title" ,"Comments");
 
-
+        $('#commentList').append('<ul>');
+        
         for(var i=0; i<data.comments.length; i++) {
 
             console.log(data.comments[i].text);
             var commentText = (data.comments[i].text).replace(/</g, "&lt;").replace(/>/g, "&gt;")
-            $('#commentList').append('<p>' + commentText + '</p><hr />');
-
+            $('#commentList ul').append('<li class="ui-widget-content" id=' + data.comments[i]._id + '>' + commentText + '</li>');
+            // Listen to a double click on the P element for the comment
+            $('#' + data.comments[i]._id).dblclick(function (event) {
+                // Remove the comment from the server
+                $.ajax({
+                    method: "DELETE",
+                    url: "/threads/" + threadId + "/comment",
+                    data: {commentId: event.target.id
+                }
+                })
+                 .done(function (data) { // "data" contains the answer from the server
+                    console.log(event.target.id + " comment deleted.");
+                    // Remove the comment from the dialog
+                    $('#' + event.target.id).remove();
+                }).fail(function (jqXHR, statusText) {
+                    alert('Could not delete comment!\nServer Communication error: ' + jqXHR.statusText);
+                });
+            });
         }
 
-
+        
     });
 
 };

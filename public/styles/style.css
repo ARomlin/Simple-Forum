@@ -112,3 +112,11 @@ input[type=text]:focus {
     width: 70%;
     height: 5rem;
 }
+
+#commentList li { 
+    margin: 3px; 
+    padding: 0.4em; 
+    height: 18px; 
+    list-style:none
+
+}
