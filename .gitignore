@@ -4,3 +4,9 @@ node_modules
 .idea/
 .vscode/
 typings/
+.vs/
+[Oo]bj/
+[Bb]in/
+*.njsproj
+# Node.js Tools for Visual Studio
+.ntvs_analysis.dat
