@@ -102,7 +102,9 @@ $('document').ready(function() {
                     primary: "ui-icon-check"
                 },
                 click: function () {
+                    myThreadId = $("#commentModal").data('myThreadId');
                     $(this).dialog("close");
+                    $('#clickMe').data('myThreadId', $(this).find(".holdMyId").html()).dialog('open');
                 }
             }, {
                 text: "Post Comment",
