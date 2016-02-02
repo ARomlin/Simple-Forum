@@ -134,7 +134,8 @@ $('document').ready(function() {
                                 showComments(data._id);                                
                                 console.log("Comment saved on thread: _id: " + data._id);
                             }).fail(function (jqXHR, statusText) {
-                                alert('Could not create comment!\nServer Communication error: ' + jqXHR.statusText);
+                                alert('Could not create comment!\nServer Communication error.');
+                                
                             });
                         } else {
                             alert("Internal Error: Missing the threadId, the \"dialog\" caller did not provide the threadId when opening this comment modal!");
