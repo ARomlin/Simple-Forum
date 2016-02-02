@@ -28,7 +28,7 @@ $.ajax({
 
 
         console.log(data[i]._id + ': ' + data[i].title + ': ' + data[i].text);
-        $('#showThreads').append('<p class="linkThread" id="'+ data[i]._id +'">' + ' <b>title:</b>' + titleContent + '</><br /><p>' +' <b>text:</b> ' + textContent + '</p><hr /><br />');
+        $('#showThreads').append('<p class="linkThread" id="'+ data[i]._id +'">' + ' <b>Title: </b>' + titleContent + '</><br /><p>' +' <b>Text:</b> ' + textContent + '</p><hr /><br />');
 
     }
 });
@@ -56,7 +56,7 @@ $('#btnCreateNewThread').on('click', function() {
             })
             .done(function (data) { // "data" innehåller det svar som servern skickat tillbaka
                 console.log("Data Saved: " + '_id: ' + data._id + ' title: ' + data.title + ' : ' + 'text: ' + data.text);
-                $('#showThreads').append('<p class="linkThread" id="' + data._id + '"><b>title: </b>' + data.title + '</p><br />' + ' <b>text:</b> ' + data.text + '</p><hr /><br />');
+                $('#showThreads').append('<p class="linkThread" id="' + data._id + '"><b>Title: </b>' + data.title + '</p><br />' + ' <b>Text:</b> ' + data.text + '</p><hr /><br />');
         }).fail( function(jqXHR, statusText){
             alert('Kunde inte skapa tråd!\nServerkommunikationsfel: '+ jqXHR.statusText);    
         });
@@ -427,7 +427,7 @@ function getThreads() {
             }
 
             console.log(data[i]._id + ': ' + data[i].title + ': ' + data[i].text);
-            $('#showThreads').append('<p class="linkThread" id="' + data[i]._id + '">' + ' <b>title:</b>' + titleContent + '</p><br /><p>' + ' <b>text:</b> ' + textContent + '</p><hr /><br />');
+            $('#showThreads').append('<p class="linkThread" id="' + data[i]._id + '">' + ' <b>Title: </b>' + titleContent + '</p><br /><p>' + ' <b>Text: </b> ' + textContent + '</p><hr /><br />');
 
         }
     });
