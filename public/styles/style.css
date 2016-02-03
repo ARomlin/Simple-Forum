@@ -57,7 +57,7 @@ body  {
 .linkThread {
     color: #066c9a;
     font-size: 1.2rem;
-    -webkit-transition: 0.5s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
 }
 
 .linkThread:hover{
