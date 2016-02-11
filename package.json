@@ -14,5 +14,9 @@
     "express": "^4.13.3",
     "mongoose": "^4.3.7",
     "node-restful": "^0.2.5"
+  },
+  "devDependencies": {
+    "chai": "~3.5.0",
+    "chai-http": "~2.0.1"
   }
 }
