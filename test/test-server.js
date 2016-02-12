@@ -6,7 +6,7 @@ var should = chai.should();
 chai.use(chaiHttp);
 
 describe('Threads', function() {
-it('should list ALL blobs on /threads GET', function(done) {
+it('should list ALL data objects on /api/data GET', function(done) {
   chai.request(server)
     .get('/threads')
     .end(function(err, res){
@@ -14,8 +14,8 @@ it('should list ALL blobs on /threads GET', function(done) {
       done();
     });
 });
-  it('should list a SINGLE Thread on /threads/<id> GET');
-  it('should add a SINGLE Thread on /threads POST');
-  it('should update a SINGLE blob on /threads/<id> PUT');
-  it('should delete a SINGLE blob on /threads/<id> DELETE');
+  it('should list a SINGLE object on /api/data/<id> GET');
+  it('should add a SINGLE object on /api/data POST');
+  it('should update a SINGLE object on /api/data/<id> PUT');
+  it('should delete a SINGLE object on /api/data/<id> DELETE');
 });
