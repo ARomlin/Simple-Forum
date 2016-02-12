@@ -2,6 +2,7 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../index');
 var should = chai.should();
+var expect = chai.expect();
 
 chai.use(chaiHttp);
 
@@ -46,6 +47,33 @@ it('should list ALL data objects on /threads GET', function(done) {
       done();
     });
   });  
-  it('should update a SINGLE object on /threads/<id> PUT');
+  it('should update a SINGLE object on /threads/<id> PUT', function(done) {
+      var threadIdHolder; 
+      
+      var myDateTimeStamp = new Date();
+      
+      var myTitle = 'titleData ' + myDateTimeStamp;
+      var myText = 'textData ' + myDateTimeStamp;
+        
+         chai.request(server).get('/threads').end(function(err, res) {
+            threadIdHolder = res.body[0]._id;             
+            
+            chai.request(server).get('/threads/' + threadIdHolder).end(function(err, res) {
+                chai.request(server).put('/threads/' + threadIdHolder).set("Content-Type", "application/x-www-form-urlencoded")
+                .send({ title: myTitle, text: myText})
+                .end(function(err, res) {
+                    
+                   res.should.have.status(200); 
+                   res.body.should.be.an('object');
+                   res.body.title.should.be.a('string');
+                   res.body.text.should.be.a('string');   
+                   
+                    done(); 
+                });
+                   
+                });
+            });           
+  });
+  
   it('should delete a SINGLE object on /threads/<id> DELETE');
 });
