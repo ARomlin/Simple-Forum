@@ -47,5 +47,22 @@ it('should list ALL data objects on /threads GET', function(done) {
     });
   });  
   it('should update a SINGLE object on /threads/<id> PUT');
-  it('should delete a SINGLE object on /threads/<id> DELETE');
-});
+  it('should delete a SINGLE object on /threads/<id> DELETE', function(done) {
+  var threadIdHolder;
+      chai.request(server)
+      .get('/threads/')
+      .end(function(err, res) {
+      
+        chai.request(server).get('/threads').end(function(err, res) {
+           threadIdHolder = res.body[0]._id;
+           
+            chai.request(server)
+            .delete('/threads/' + threadIdHolder)
+            .end(function(err, res) {
+                res.should.have.status(200);
+            done(); 
+            });  
+        });
+        });
+        });
+    });
