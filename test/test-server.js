@@ -14,7 +14,26 @@ it('should list ALL data objects on /threads GET', function(done) {
       done();
     });
 });
-  it('should list a SINGLE object on /threads/<id> GET');
+  it('should list a SINGLE object on /threads/<id> GET', function(done) {
+      var threadIdHolder;
+      chai.request(server)
+      .get('/threads/')
+      .end(function(err, res) {
+      
+        chai.request(server).get('/threads').end(function(err, res) {
+           threadIdHolder = res.body[0]._id;
+           
+            chai.request(server).get('/threads/' + threadIdHolder).end(function(err, res) {
+                res.should.have.status(200);
+                res.body.should.be.an('object');
+                res.body.title.should.be.a('string');
+                res.body.text.should.be.a('string');
+            done(); 
+            });  
+        }); 
+      });
+  });
+  
   it('should add a SINGLE object on /threads POST');
   it('should update a SINGLE object on /threads/<id> PUT');
   it('should delete a SINGLE object on /threads/<id> DELETE');
