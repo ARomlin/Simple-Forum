@@ -59,7 +59,7 @@ it('should list ALL data objects on /threads GET', function(done) {
             chai.request(server)
             .delete('/threads/' + threadIdHolder)
             .end(function(err, res) {
-                res.should.have.status(200);
+                res.should.have.status(204);
             done(); 
             });  
         });
