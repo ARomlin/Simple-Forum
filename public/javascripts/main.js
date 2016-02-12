@@ -284,7 +284,7 @@ $('document').ready(function() {
             },{
                 text: "DELETE",
                 icons: {
-                    primary: "ui-icon-trash",
+                    primary: "ui-icon-trash"
                 },
                 click: function() {
 
@@ -351,7 +351,9 @@ $('document').ready(function() {
 
     //====== End of Set up dialog properties for Modal to show a single thread=======
 
-}); // ===End of Document ready function ===
+});
+
+// ===End of Document ready function ===
 
 
 
